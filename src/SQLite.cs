@@ -40,6 +40,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #endif
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 
 #if USE_CSHARP_SQLITE
@@ -197,12 +200,12 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, object>> property, bool unique = false);
+		T> (Expression<Func<T, object>> property, bool unique = false);
 		CreateTableResult CreateTable<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (CreateFlags createFlags = CreateFlags.None);
+		T> (CreateFlags createFlags = CreateFlags.None);
 		CreateTableResult CreateTable (
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
@@ -212,26 +215,26 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T2> (CreateFlags createFlags = CreateFlags.None)
+		T2> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new();
 		CreateTablesResult CreateTables<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T2,
+		T2,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T3> (CreateFlags createFlags = CreateFlags.None)
+		T3> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new();
@@ -239,19 +242,19 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T2,
+		T2,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T3,
+		T3,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T4> (CreateFlags createFlags = CreateFlags.None)
+		T4> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new()
@@ -260,23 +263,23 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T2,
+		T2,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T3,
+		T3,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T4,
+		T4,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T5> (CreateFlags createFlags = CreateFlags.None)
+		T5> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new()
@@ -290,7 +293,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new();
+		T> (string query, params object[] args) where T : new();
 		IEnumerable<object> DeferredQuery (TableMapping map, string query, params object[] args);
 #if NET8_0_OR_GREATER
 		[RequiresUnreferencedCode ("This method requires ''DynamicallyAccessedMemberTypes.All' on the runtime type of 'objectToDelete'.")]
@@ -300,19 +303,19 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object primaryKey);
+		T> (object primaryKey);
 		int Delete (object primaryKey, TableMapping map);
 		int DeleteAll<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ();
+		T> ();
 		int DeleteAll (TableMapping map);
 		int DropTable<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ();
+		T> ();
 		int DropTable (TableMapping map);
 		void EnableLoadExtension (bool enabled);
 		void EnableWriteAheadLogging ();
@@ -322,30 +325,30 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object pk) where T : new();
+		T> (object pk) where T : new();
 		object Find (object pk, TableMapping map);
 		T Find<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, bool>> predicate) where T : new();
+		T> (Expression<Func<T, bool>> predicate) where T : new();
 		T FindWithQuery<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new();
+		T> (string query, params object[] args) where T : new();
 		object FindWithQuery (TableMapping map, string query, params object[] args);
 		T Get<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object pk) where T : new();
+		T> (object pk) where T : new();
 		object Get (object pk, TableMapping map);
 		T Get<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, bool>> predicate) where T : new();
+		T> (Expression<Func<T, bool>> predicate) where T : new();
 		TableMapping GetMapping (
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
@@ -355,7 +358,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (CreateFlags createFlags = CreateFlags.None);
+		T> (CreateFlags createFlags = CreateFlags.None);
 		List<SQLiteConnection.ColumnInfo> GetTableInfo (string tableName);
 #if NET8_0_OR_GREATER
 		[RequiresUnreferencedCode ("This method requires ''DynamicallyAccessedMemberTypes.All' on the runtime type of 'obj'.")]
@@ -407,7 +410,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new();
+		T> (string query, params object[] args) where T : new();
 		List<object> Query (TableMapping map, string query, params object[] args);
 		List<T> QueryScalars<T> (string query, params object[] args);
 		void ReKey (string key);
@@ -421,7 +424,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> () where T : new();
+		T> () where T : new();
 #if NET8_0_OR_GREATER
 		[RequiresUnreferencedCode ("This method requires ''DynamicallyAccessedMemberTypes.All' on the runtime type of 'obj'.")]
 #endif
@@ -676,9 +679,9 @@ namespace SQLite
 		public void ReKey (string key)
 		{
 			if (key == null)
-				throw new ArgumentNullException(nameof(key));
-			var q = Quote(key);
-			ExecuteScalar<string>("pragma rekey = " + q);
+				throw new ArgumentNullException (nameof (key));
+			var q = Quote (key);
+			ExecuteScalar<string> ("pragma rekey = " + q);
 		}
 
 		/// <summary>
@@ -688,11 +691,11 @@ namespace SQLite
 		public void ReKey (byte[] key)
 		{
 			if (key == null)
-				throw new ArgumentNullException(nameof(key));
+				throw new ArgumentNullException (nameof (key));
 			if (key.Length != 32 && key.Length != 48)
 				throw new ArgumentException ("Key must be 32 bytes (256-bit) or 48 bytes (384-bit)", nameof (key));
-			var s = String.Join("", key.Select(x => x.ToString("X2")));
-			ExecuteScalar<string>("pragma rekey = \"x'" + s + "'\"");
+			var s = String.Join ("", key.Select (x => x.ToString ("X2")));
+			ExecuteScalar<string> ("pragma rekey = \"x'" + s + "'\"");
 		}
 
 		/// <summary>
@@ -794,7 +797,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (CreateFlags createFlags = CreateFlags.None)
+		T> (CreateFlags createFlags = CreateFlags.None)
 		{
 			return GetMapping (typeof (T), createFlags);
 		}
@@ -820,7 +823,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ()
+		T> ()
 		{
 			return DropTable (GetMapping (typeof (T)));
 		}
@@ -850,7 +853,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (CreateFlags createFlags = CreateFlags.None)
+		T> (CreateFlags createFlags = CreateFlags.None)
 		{
 			return CreateTable (typeof (T), createFlags);
 		}
@@ -960,11 +963,11 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T2> (CreateFlags createFlags = CreateFlags.None)
+		T2> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 		{
@@ -987,15 +990,15 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T,
-#if NET8_0_OR_GREATER
-			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T2,
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T3> (CreateFlags createFlags = CreateFlags.None)
+		T2,
+#if NET8_0_OR_GREATER
+			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
+#endif
+		T3> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new()
@@ -1018,20 +1021,20 @@ namespace SQLite
 		public CreateTablesResult CreateTables<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T,
+#endif
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T2,
+#endif
+		T2,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T3,
+#endif
+		T3,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T4> (CreateFlags createFlags = CreateFlags.None)
+#endif
+		T4> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new()
@@ -1055,24 +1058,24 @@ namespace SQLite
 		public CreateTablesResult CreateTables<
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T,
+#endif
+		T,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T2,
+#endif
+		T2,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T3,
+#endif
+		T3,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T4,
+#endif
+		T4,
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
-# endif
-			T5> (CreateFlags createFlags = CreateFlags.None)
+#endif
+		T5> (CreateFlags createFlags = CreateFlags.None)
 			where T : new()
 			where T2 : new()
 			where T3 : new()
@@ -1092,7 +1095,7 @@ namespace SQLite
 		/// Whether the table was created or migrated for each type.
 		/// </returns>
 #if NET8_0_OR_GREATER
-		[RequiresUnreferencedCode("This method requires 'DynamicallyAccessedMemberTypes.All' on each input 'Type' instance.")]
+		[RequiresUnreferencedCode ("This method requires 'DynamicallyAccessedMemberTypes.All' on each input 'Type' instance.")]
 #endif
 		public CreateTablesResult CreateTables (CreateFlags createFlags = CreateFlags.None, params Type[] types)
 		{
@@ -1168,7 +1171,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, object>> property, bool unique = false)
+		T> (Expression<Func<T, object>> property, bool unique = false)
 		{
 			MemberExpression mx;
 			if (property.Body.NodeType == ExpressionType.Convert) {
@@ -1406,7 +1409,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new()
+		T> (string query, params object[] args) where T : new()
 		{
 			var cmd = CreateCommand (query, args);
 			return cmd.ExecuteQuery<T> ();
@@ -1454,7 +1457,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new()
+		T> (string query, params object[] args) where T : new()
 		{
 			var cmd = CreateCommand (query, args);
 			return cmd.ExecuteDeferredQuery<T> ();
@@ -1526,7 +1529,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> () where T : new()
+		T> () where T : new()
 		{
 			return new TableQuery<T> (this);
 		}
@@ -1547,7 +1550,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object pk) where T : new()
+		T> (object pk) where T : new()
 		{
 			var map = GetMapping (typeof (T));
 			return Query<T> (map.GetByPrimaryKeySql, pk).First ();
@@ -1588,7 +1591,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, bool>> predicate) where T : new()
+		T> (Expression<Func<T, bool>> predicate) where T : new()
 		{
 			return Table<T> ().Where (predicate).First ();
 		}
@@ -1609,7 +1612,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object pk) where T : new()
+		T> (object pk) where T : new()
 		{
 			var map = GetMapping (typeof (T));
 			return Query<T> (map.GetByPrimaryKeySql, pk).FirstOrDefault ();
@@ -1650,7 +1653,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (Expression<Func<T, bool>> predicate) where T : new()
+		T> (Expression<Func<T, bool>> predicate) where T : new()
 		{
 			return Table<T> ().Where (predicate).FirstOrDefault ();
 		}
@@ -1673,7 +1676,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (string query, params object[] args) where T : new()
+		T> (string query, params object[] args) where T : new()
 		{
 			return Query<T> (query, args).FirstOrDefault ();
 		}
@@ -2064,7 +2067,7 @@ namespace SQLite
 		/// The number of rows added to the table.
 		/// </returns>
 #if NET8_0_OR_GREATER
-		[RequiresUnreferencedCode("This method requires ''DynamicallyAccessedMemberTypes.All' on the runtime type of 'obj'.")]
+		[RequiresUnreferencedCode ("This method requires ''DynamicallyAccessedMemberTypes.All' on the runtime type of 'obj'.")]
 #endif
 		public int Insert (object obj)
 		{
@@ -2468,7 +2471,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> (object primaryKey)
+		T> (object primaryKey)
 		{
 			return Delete (primaryKey, GetMapping (typeof (T)));
 		}
@@ -2513,7 +2516,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ()
+		T> ()
 		{
 			var map = GetMapping (typeof (T));
 			return DeleteAll (map);
@@ -2917,10 +2920,33 @@ namespace SQLite
 	{
 	}
 
+	[AttributeUsage (AttributeTargets.Property)]
+	public class StoreAsJsonAttribute : Attribute
+	{
+#if NET8_0_OR_GREATER
+		[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+#endif
+		public Type JsonSerializerContextType { get; private set; }
+
+		public StoreAsJsonAttribute (
+#if NET8_0_OR_GREATER
+			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+#endif
+			Type jsonSerializerContextType)
+		{
+			if (jsonSerializerContextType == null)
+				throw new ArgumentNullException (nameof (jsonSerializerContextType));
+			if (!typeof (JsonSerializerContext).IsAssignableFrom (jsonSerializerContextType))
+				throw new ArgumentException ($"{jsonSerializerContextType} must derive from {nameof (JsonSerializerContext)}.", nameof (jsonSerializerContextType));
+
+			JsonSerializerContextType = jsonSerializerContextType;
+		}
+	}
+
 	public class TableMapping
 	{
 #if NET8_0_OR_GREATER
-		[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
+		[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)]
 #endif
 		public Type MappedType { get; private set; }
 
@@ -2969,13 +2995,12 @@ namespace SQLite
 			TableName = (tableAttr != null && !string.IsNullOrEmpty (tableAttr.Name)) ? tableAttr.Name : MappedType.Name;
 			WithoutRowId = tableAttr != null ? tableAttr.WithoutRowId : false;
 
-			var members = GetPublicMembers(type);
-			var cols = new List<Column>(members.Count);
-			foreach(var m in members)
-			{
-				var ignore = m.IsDefined(typeof(IgnoreAttribute), true);
-				if(!ignore)
-					cols.Add(new Column(m, createFlags));
+			var members = GetPublicMembers (type);
+			var cols = new List<Column> (members.Count);
+			foreach (var m in members) {
+				var ignore = m.IsDefined (typeof (IgnoreAttribute), true);
+				if (!ignore)
+					cols.Add (new Column (m, createFlags));
 			}
 			Columns = cols.ToArray ();
 			foreach (var c in Columns) {
@@ -3001,55 +3026,54 @@ namespace SQLite
 			_insertOrReplaceColumns = Columns.ToArray ();
 		}
 
-		private IReadOnlyCollection<MemberInfo> GetPublicMembers(
+		private IReadOnlyCollection<MemberInfo> GetPublicMembers (
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
 			Type type)
 		{
-			if(type.Name.StartsWith("ValueTuple`"))
-				return GetFieldsFromValueTuple(type);
+			if (type.Name.StartsWith ("ValueTuple`"))
+				return GetFieldsFromValueTuple (type);
 
-			var members = new List<MemberInfo>();
-			var memberNames = new HashSet<string>();
-			var newMembers = new List<MemberInfo>();
-			do
-			{
-				var ti = type.GetTypeInfo();
-				newMembers.Clear();
+			var members = new List<MemberInfo> ();
+			var memberNames = new HashSet<string> ();
+			var newMembers = new List<MemberInfo> ();
+			do {
+				var ti = type.GetTypeInfo ();
+				newMembers.Clear ();
 
-				newMembers.AddRange(
+				newMembers.AddRange (
 					from p in ti.DeclaredProperties
-					where !memberNames.Contains(p.Name) &&
+					where !memberNames.Contains (p.Name) &&
 						p.CanRead && p.CanWrite &&
 						p.GetMethod != null && p.SetMethod != null &&
 						p.GetMethod.IsPublic && p.SetMethod.IsPublic &&
 						!p.GetMethod.IsStatic && !p.SetMethod.IsStatic
 					select p);
 
-				members.AddRange(newMembers);
-				foreach(var m in newMembers)
-					memberNames.Add(m.Name);
+				members.AddRange (newMembers);
+				foreach (var m in newMembers)
+					memberNames.Add (m.Name);
 
 				type = ti.BaseType;
 			}
-			while(type != typeof(object));
+			while (type != typeof (object));
 
 			return members;
 		}
 
-		private IReadOnlyCollection<MemberInfo> GetFieldsFromValueTuple(
+		private IReadOnlyCollection<MemberInfo> GetFieldsFromValueTuple (
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.PublicFields)]
 #endif
 			Type type)
 		{
 			Method = MapMethod.ByPosition;
-			var fields = type.GetFields();
+			var fields = type.GetFields ();
 
 			// https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-8.rest
-			if(fields.Length >= 8)
-				throw new NotSupportedException("ValueTuple with more than 7 members not supported due to nesting; see https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-8.rest");
+			if (fields.Length >= 8)
+				throw new NotSupportedException ("ValueTuple with more than 7 members not supported due to nesting; see https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-8.rest");
 
 			return fields;
 		}
@@ -3083,8 +3107,8 @@ namespace SQLite
 
 		public Column FindColumn (string columnName)
 		{
-			if(Method != MapMethod.ByName)
-				throw new InvalidOperationException($"This {nameof(TableMapping)} is not mapped by name, but {Method}.");
+			if (Method != MapMethod.ByName)
+				throw new InvalidOperationException ($"This {nameof (TableMapping)} is not mapped by name, but {Method}.");
 
 			var exact = Columns.FirstOrDefault (c => c.Name.ToLower () == columnName.ToLower ());
 			return exact;
@@ -3117,10 +3141,12 @@ namespace SQLite
 
 			public bool StoreAsText { get; private set; }
 
+			public JsonTypeInfo JsonTypeInfo { get; private set; }
+
 			public Column (MemberInfo member, CreateFlags createFlags = CreateFlags.None)
 			{
 				_member = member;
-				var memberType = GetMemberType(member);
+				var memberType = GetMemberType (member);
 
 				var colAttr = member.CustomAttributes.FirstOrDefault (x => x.AttributeType == typeof (ColumnAttribute));
 #if ENABLE_IL2CPP
@@ -3155,49 +3181,59 @@ namespace SQLite
 				MaxStringLength = Orm.MaxStringLength (member);
 
 				StoreAsText = memberType.GetTypeInfo ().CustomAttributes.Any (x => x.AttributeType == typeof (StoreAsTextAttribute));
+
+				var storeAsJson = member.GetCustomAttribute<StoreAsJsonAttribute> ();
+				if (storeAsJson != null) {
+					var context = (JsonSerializerContext)Activator.CreateInstance (storeAsJson.JsonSerializerContextType);
+					JsonTypeInfo = context.GetTypeInfo (memberType) ??
+						throw new InvalidOperationException ($"{storeAsJson.JsonSerializerContextType} does not provide JSON metadata for {memberType}.");
+				}
 			}
 
 			public Column (PropertyInfo member, CreateFlags createFlags = CreateFlags.None)
-				: this((MemberInfo)member, createFlags)
+				: this ((MemberInfo)member, createFlags)
 			{ }
 
 			public void SetValue (object obj, object val)
 			{
-				if(_member is PropertyInfo propy)
-				{
+				if (_member is PropertyInfo propy) {
 					if (val != null && ColumnType.GetTypeInfo ().IsEnum)
 						propy.SetValue (obj, Enum.ToObject (ColumnType, val));
 					else
 						propy.SetValue (obj, val);
 				}
-				else if(_member is FieldInfo field)
-				{
+				else if (_member is FieldInfo field) {
 					if (val != null && ColumnType.GetTypeInfo ().IsEnum)
 						field.SetValue (obj, Enum.ToObject (ColumnType, val));
 					else
 						field.SetValue (obj, val);
 				}
 				else
-					throw new InvalidProgramException("unreachable condition");
+					throw new InvalidProgramException ("unreachable condition");
 			}
 
 			public object GetValue (object obj)
 			{
-				if(_member is PropertyInfo propy)
-					return propy.GetValue(obj);
-				else if(_member is FieldInfo field)
-					return field.GetValue(obj);
+				object value;
+				if (_member is PropertyInfo propy)
+					value = propy.GetValue (obj);
+				else if (_member is FieldInfo field)
+					value = field.GetValue (obj);
 				else
-					throw new InvalidProgramException("unreachable condition");
+					throw new InvalidProgramException ("unreachable condition");
+
+				return value != null && JsonTypeInfo != null ? JsonSerializer.Serialize (value, JsonTypeInfo) : value;
 			}
 
-			private static Type GetMemberType(MemberInfo m)
+			private static Type GetMemberType (MemberInfo m)
 			{
-				switch(m.MemberType)
-				{
-					case MemberTypes.Property: return ((PropertyInfo)m).PropertyType;
-					case MemberTypes.Field: return ((FieldInfo)m).FieldType;
-					default: throw new InvalidProgramException($"{nameof(TableMapping)} supports properties or fields only.");
+				switch (m.MemberType) {
+					case MemberTypes.Property:
+						return ((PropertyInfo)m).PropertyType;
+					case MemberTypes.Field:
+						return ((FieldInfo)m).FieldType;
+					default:
+						throw new InvalidProgramException ($"{nameof (TableMapping)} supports properties or fields only.");
 				}
 			}
 		}
@@ -3224,7 +3260,7 @@ namespace SQLite
 					EnumValues = new Dictionary<int, string> ();
 #if NET8_0_OR_GREATER
 					foreach (object e in Enum.GetValuesAsUnderlyingType (type)) {
-						EnumValues[Convert.ToInt32 (e)] = Enum.ToObject(type, e).ToString ();
+						EnumValues[Convert.ToInt32 (e)] = Enum.ToObject (type, e).ToString ();
 					}
 #else
 					foreach (object e in Enum.GetValues (type)) {
@@ -3304,7 +3340,10 @@ namespace SQLite
 		public static string SqlType (TableMapping.Column p, bool storeDateTimeAsTicks, bool storeTimeSpanAsTicks)
 		{
 			var clrType = p.ColumnType;
-			if (clrType == typeof (Boolean) || clrType == typeof (Byte) || clrType == typeof (UInt16) || clrType == typeof (SByte) || clrType == typeof (Int16) || clrType == typeof (Int32) || clrType == typeof (UInt32) || clrType == typeof (Int64) || clrType == typeof (UInt64)) {
+			if (p.JsonTypeInfo != null) {
+				return "varchar";
+			}
+			else if (clrType == typeof (Boolean) || clrType == typeof (Byte) || clrType == typeof (UInt16) || clrType == typeof (SByte) || clrType == typeof (Int16) || clrType == typeof (Int32) || clrType == typeof (UInt32) || clrType == typeof (Int64) || clrType == typeof (UInt64)) {
 				return "integer";
 			}
 			else if (clrType == typeof (Single) || clrType == typeof (Double) || clrType == typeof (Decimal)) {
@@ -3339,9 +3378,8 @@ namespace SQLite
 			else if (clrType == typeof (Guid)) {
 				return "varchar(36)";
 			}
-			else {
-				throw new NotSupportedException ("Don't know about " + clrType);
-			}
+			else
+				throw new NotSupportedException ($"Cannot store type {clrType}. Use {nameof (StoreAsJsonAttribute)} with a source-generated {nameof (JsonSerializerContext)}.");
 		}
 
 		public static bool IsPK (MemberInfo p)
@@ -3448,7 +3486,7 @@ namespace SQLite
 #endif
 		}
 
-		public static int? MaxStringLength (PropertyInfo p) => MaxStringLength((MemberInfo)p);
+		public static int? MaxStringLength (PropertyInfo p) => MaxStringLength ((MemberInfo)p);
 
 		public static bool IsMarkedNotNull (MemberInfo p)
 		{
@@ -3501,7 +3539,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ()
+		T> ()
 		{
 			return ExecuteDeferredQuery<T> (_conn.GetMapping (typeof (T)));
 		}
@@ -3510,7 +3548,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			T> ()
+		T> ()
 		{
 			return ExecuteDeferredQuery<T> (_conn.GetMapping (typeof (T))).ToList ();
 		}
@@ -3546,13 +3584,12 @@ namespace SQLite
 				var cols = new TableMapping.Column[SQLite3.ColumnCount (stmt)];
 				var fastColumnSetters = new Action<object, Sqlite3Statement, int>[SQLite3.ColumnCount (stmt)];
 
-				if (map.Method == TableMapping.MapMethod.ByPosition)
-				{
-					Array.Copy(map.Columns, cols, Math.Min(cols.Length, map.Columns.Length));
+				if (map.Method == TableMapping.MapMethod.ByPosition) {
+					Array.Copy (map.Columns, cols, Math.Min (cols.Length, map.Columns.Length));
 				}
 				else if (map.Method == TableMapping.MapMethod.ByName) {
 					MethodInfo getSetter = null;
-					if (typeof(T) != map.MappedType) {
+					if (typeof (T) != map.MappedType) {
 #if NET8_0_OR_GREATER
 						// The runtime feature switch must be on a separate 'if' branch on its own,
 						// or the analyzer might not be able to correctly follow the program flow.
@@ -3572,15 +3609,15 @@ namespace SQLite
 #endif
 					}
 
-					for (int i = 0; i < cols.Length; i++) {						
+					for (int i = 0; i < cols.Length; i++) {
 						var name = SQLite3.ColumnName16 (stmt, i);
 						cols[i] = map.FindColumn (name);
 						if (cols[i] != null)
 							if (getSetter != null) {
-								fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>)getSetter.Invoke(null, new object[]{ _conn, cols[i]});
+								fastColumnSetters[i] = (Action<object, Sqlite3Statement, int>)getSetter.Invoke (null, new object[] { _conn, cols[i] });
 							}
 							else {
-								fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T>(_conn, cols[i]);
+								fastColumnSetters[i] = FastColumnSetter.GetFastSetter<T> (_conn, cols[i]);
 							}
 					}
 				}
@@ -3596,7 +3633,7 @@ namespace SQLite
 						}
 						else {
 							var colType = SQLite3.ColumnType (stmt, i);
-							var val = ReadCol (stmt, i, colType, cols[i].ColumnType);
+							var val = ReadCol (stmt, i, colType, cols[i].ColumnType, cols[i].JsonTypeInfo);
 							cols[i].SetValue (obj, val);
 						}
 					}
@@ -3790,9 +3827,8 @@ namespace SQLite
 						else
 							SQLite3.BindInt (stmt, index, enumIntValue);
 					}
-					else {
-						throw new NotSupportedException ("Cannot store type: " + Orm.GetType (value));
-					}
+					else
+						throw new NotSupportedException ($"Cannot bind type {valueType}. Serialize the value explicitly or use a mapped property with {nameof (StoreAsJsonAttribute)}.");
 				}
 			}
 		}
@@ -3806,10 +3842,13 @@ namespace SQLite
 			public int Index { get; set; }
 		}
 
-		object ReadCol (Sqlite3Statement stmt, int index, SQLite3.ColType type, Type clrType)
+		object ReadCol (Sqlite3Statement stmt, int index, SQLite3.ColType type, Type clrType, JsonTypeInfo jsonTypeInfo = null)
 		{
 			if (type == SQLite3.ColType.Null) {
 				return null;
+			}
+			else if (jsonTypeInfo != null) {
+				return JsonSerializer.Deserialize (SQLite3.ColumnString (stmt, index), jsonTypeInfo);
 			}
 			else {
 				var clrTypeInfo = clrType.GetTypeInfo ();
@@ -3913,9 +3952,8 @@ namespace SQLite
 					var text = SQLite3.ColumnString (stmt, index);
 					return new UriBuilder (text);
 				}
-				else {
-					throw new NotSupportedException ("Don't know how to read " + clrType);
-				}
+				else
+					throw new NotSupportedException ($"Cannot read type {clrType}. Use a mapped property with {nameof (StoreAsJsonAttribute)} and a source-generated {nameof (JsonSerializerContext)}.");
 			}
 		}
 	}
@@ -3954,6 +3992,9 @@ namespace SQLite
 		/// </returns>
 		internal static Action<object, Sqlite3Statement, int> GetFastSetter<T> (SQLiteConnection conn, TableMapping.Column column)
 		{
+			if (column.JsonTypeInfo != null)
+				return null;
+
 			Action<object, Sqlite3Statement, int> fastSetter = null;
 
 			Type clrType = column.PropertyInfo.PropertyType;
@@ -3970,7 +4011,7 @@ namespace SQLite
 				});
 			}
 			else if (clrType == typeof (Int32)) {
-				fastSetter = CreateNullableTypedSetterDelegate<T, int> (column, (stmt, index)=>{
+				fastSetter = CreateNullableTypedSetterDelegate<T, int> (column, (stmt, index) => {
 					return SQLite3.ColumnInt (stmt, index);
 				});
 			}
@@ -3986,7 +4027,7 @@ namespace SQLite
 			}
 			else if (clrType == typeof (float)) {
 				fastSetter = CreateNullableTypedSetterDelegate<T, float> (column, (stmt, index) => {
-					return (float) SQLite3.ColumnDouble (stmt, index);
+					return (float)SQLite3.ColumnDouble (stmt, index);
 				});
 			}
 			else if (clrType == typeof (TimeSpan)) {
@@ -4036,10 +4077,9 @@ namespace SQLite
 					return SQLite3.ColumnInt64 (stmt, index);
 				});
 			}
-			else if (clrType == typeof(UInt64))
-			{
-				fastSetter = CreateNullableTypedSetterDelegate<T, UInt64>(column, (stmt, index) => {
-					return (ulong)SQLite3.ColumnInt64(stmt, index);
+			else if (clrType == typeof (UInt64)) {
+				fastSetter = CreateNullableTypedSetterDelegate<T, UInt64> (column, (stmt, index) => {
+					return (ulong)SQLite3.ColumnInt64 (stmt, index);
 				});
 			}
 			else if (clrType == typeof (UInt32)) {
@@ -4119,7 +4159,7 @@ namespace SQLite
 		/// <returns>A strongly-typed delegate</returns>
 		private static Action<object, Sqlite3Statement, int> CreateNullableTypedSetterDelegate<ObjectType, ColumnMemberType> (TableMapping.Column column, Func<Sqlite3Statement, int, ColumnMemberType> getColumnValue) where ColumnMemberType : struct
 		{
-			var clrTypeInfo = column.PropertyInfo.PropertyType.GetTypeInfo();
+			var clrTypeInfo = column.PropertyInfo.PropertyType.GetTypeInfo ();
 			bool isNullable = false;
 
 			if (clrTypeInfo.IsGenericType && clrTypeInfo.GetGenericTypeDefinition () == typeof (Nullable<>)) {
@@ -4279,7 +4319,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 		[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-		T> : BaseTableQuery, IEnumerable<T>
+	T> : BaseTableQuery, IEnumerable<T>
 	{
 		public SQLiteConnection Connection { get; private set; }
 
@@ -4314,7 +4354,7 @@ namespace SQLite
 #if NET8_0_OR_GREATER
 			[DynamicallyAccessedMembers (DynamicallyAccessedMemberTypes.All)]
 #endif
-			U> ()
+		U> ()
 		{
 			var q = new TableQuery<U> (Connection, Table);
 			q._where = _where;

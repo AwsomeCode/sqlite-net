@@ -35,9 +35,11 @@ namespace SQLite.Tests
 			Assert.DoesNotThrow (() => new NotNullAttribute ());
 			Assert.DoesNotThrow (() => new PreserveAttribute ());
 			Assert.DoesNotThrow (() => new PrimaryKeyAttribute ());
+			Assert.DoesNotThrow (() => new StoreAsJsonAttribute (typeof (StoreAsJsonContext)));
 			Assert.DoesNotThrow (() => new StoreAsTextAttribute ());
 			Assert.DoesNotThrow (() => new TableAttribute ("Foo"));
 			Assert.DoesNotThrow (() => new UniqueAttribute ());
+			Assert.Throws<ArgumentException> (() => new StoreAsJsonAttribute (typeof (string)));
 		}
 	}
 }

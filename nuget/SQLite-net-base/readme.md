@@ -123,6 +123,29 @@ public class Customer
 
 The context must provide metadata for the exact property type. Referenced child objects, collections, and dictionaries are included transitively by System.Text.Json source generation.
 
+For example, an `ObservableCollection<Address>` property requires metadata for `ObservableCollection<Address>`, not just `Address`:
+
+```csharp
+using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
+
+[JsonSerializable (typeof (ObservableCollection<Address>))]
+public partial class AppJsonContext : JsonSerializerContext
+{
+}
+
+public class Customer
+{
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+
+    [StoreAsJson (typeof (AppJsonContext))]
+    public ObservableCollection<Address> Addresses { get; set; }
+}
+```
+
+`Address` is included transitively as the collection element type. Register it separately only when it is also serialized directly.
+
 ```csharp
 db.CreateTable<Customer> ();
 

@@ -22,7 +22,6 @@
 #if WINDOWS_PHONE && !USE_WP8_NATIVE_SQLITE
 #define USE_CSHARP_SQLITE
 #endif
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
